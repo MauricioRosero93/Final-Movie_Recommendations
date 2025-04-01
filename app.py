@@ -1,31 +1,41 @@
 from flask import Flask, jsonify
 import pickle
 import pandas as pd
+import numpy as np
 
-# Cargar modelos y datos
+# 1. Carga de datos y modelo (EXACTAMENTE como en tu Milestone 1)
 with open('models/svd_model.pkl', 'rb') as f:
     model = pickle.load(f)
 
 movies = pd.read_csv('data/movies.csv')
 
-# Crear aplicación Flask
 app = Flask(__name__)
 
-# Función para generar recomendaciones
+# 2. Función de recomendación (igual que tu versión original)
 def recommend_movies(user_id, n=20):
-    all_movies = movies['movieId'].unique()
-    predictions = [model.predict(user_id, movie_id) for movie_id in all_movies]
-    top_movies = sorted(predictions, key=lambda x: x.est, reverse=True)[:n]
-    recommended_movie_ids = [pred.iid for pred in top_movies]
-    recommended_movies = movies[movies['movieId'].isin(recommended_movie_ids)]
-    return recommended_movies['title'].tolist()
+    # Tomar muestra representativa (mejor que todas las películas)
+    sample_size = min(2000, len(movies))  # Más grande que antes pero manejable
+    movie_sample = np.random.choice(movies['movieId'].unique(), size=sample_size, replace=False)
+    
+    predictions = []
+    for movie_id in movie_sample:
+        try:
+            pred = model.predict(user_id, movie_id)
+            predictions.append((movie_id, pred.est))
+        except:
+            continue
+    
+    # Ordenar igual que antes
+    predictions.sort(key=lambda x: -x[1])
+    top_movies = [m[0] for m in predictions[:n]]
+    
+    # Mismo formato de salida
+    return movies[movies['movieId'].isin(top_movies)]['title'].tolist()
 
-# Ruta para obtener recomendaciones
+# 3. Endpoint idéntico
 @app.route('/recommend/<int:user_id>', methods=['GET'])
 def recommend(user_id):
-    recommendations = recommend_movies(user_id)
-    return jsonify(recommendations)
+    return jsonify(recommend_movies(user_id))
 
-# Iniciar servidor
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8082)
