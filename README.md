@@ -16,4 +16,4 @@ Personalized recommendations testing:
 ![a](Screenshots/3.png)
 
 Performance comparison between models:
-![b](Screenshots/5.png)
+![a](Screenshots/5.png)
