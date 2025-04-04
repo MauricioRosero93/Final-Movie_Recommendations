@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Instalar Dependencias') {
             steps {
-                bat "\"${env.PYTHON}\" -m pip install pytest numpy pandas scikit-surprise"
+                bat "\"${env.PYTHON}\" -m pip install -e ."
             }
         }
         
@@ -20,9 +20,10 @@ pipeline {
         
         stage('Ejecutar Pipeline') {
             steps {
-                bat "\"${env.PYTHON}\" pipeline/data_processing.py"
-                bat "\"${env.PYTHON}\" pipeline/model_training.py"
-                bat "\"${env.PYTHON}\" pipeline/model_evaluation.py"
+                // Ejecutar como módulos Python
+                bat "\"${env.PYTHON}\" -m pipeline.data_processing"
+                bat "\"${env.PYTHON}\" -m pipeline.model_training"
+                bat "\"${env.PYTHON}\" -m pipeline.model_evaluation"
             }
         }
     }
