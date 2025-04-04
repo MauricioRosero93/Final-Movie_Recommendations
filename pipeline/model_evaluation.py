@@ -1,3 +1,6 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent))
 import pickle
 from surprise import accuracy
 from surprise.model_selection import train_test_split
