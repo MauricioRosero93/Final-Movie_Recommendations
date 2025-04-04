@@ -39,24 +39,20 @@ def log_interaction(user_id, recommendations, response_time):
 # 3. Endpoints
 @app.route('/recommend/<int:user_id>', methods=['GET'])
 def recommend(user_id):
-    """Endpoint principal de recomendaciones"""
     start_time = time.time()
-    
-    # Generar recomendaciones
-    all_movies = movies['movieId'].unique()
-    predictions = [model.predict(user_id, movie_id) for movie_id in all_movies]
-    top_movies = sorted(predictions, key=lambda x: x.est, reverse=True)[:20]
-    recommendations = [pred.iid for pred in top_movies]
-    movie_titles = [get_movie_title(mid) for mid in recommendations]
-    
-    # Registrar telemetría
+    movie_titles = recommend_movies(user_id)
     log_interaction(
         user_id=user_id,
         recommendations=movie_titles,
         response_time=int((time.time() - start_time) * 1000)
     )
-    
     return jsonify(movie_titles)
+
+def recommend_movies(user_id, n=20):
+    all_movies = movies['movieId'].unique()
+    predictions = [model.predict(user_id, movie_id) for movie_id in all_movies]
+    top_movies = sorted(predictions, key=lambda x: x.est, reverse=True)[:n]
+    return [get_movie_title(pred.iid) for pred in top_movies]
 
 @app.route('/rate/<int:movie_id>=<int:rating>', methods=['GET'])
 def rate_movie(movie_id, rating):
