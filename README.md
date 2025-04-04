@@ -10,12 +10,12 @@
 * Use continuous integration to test infrastructure and models
 
 **Screenshots**
-![a](Screenshots/1.png)
+![a](Screenshots/a1.png)
 
-![a](Screenshots/2.png)
+![a](Screenshots/a2.png)
 
-![a](Screenshots/3.png)
+![a](Screenshots/a3.png)
 
-![a](Screenshots/4.png)
+![a](Screenshots/a4.png)
 
-![a](Screenshots/5.png)
+![a](Screenshots/a5.png)
