@@ -1,0 +1,40 @@
+2025-03-31 18:08:24,588 - app - INFO - Request: GET /recommend/999999
+2025-03-31 18:08:24,589 - app - ERROR - Model not loaded
+2025-03-31 18:08:24,592 - app - INFO - Request: GET /recommend/1
+2025-03-31 18:08:24,593 - app - ERROR - Model not loaded
+2025-03-31 18:15:39,256 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:15:39,471 - movie_recommender - INFO - Petición: GET /recommend/999999
+2025-03-31 18:15:39,487 - movie_recommender - INFO - Petición: GET /recommend/1
+2025-03-31 18:19:19,566 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:19:19,784 - movie_recommender - INFO - Petición: GET /health
+2025-03-31 18:19:19,786 - movie_recommender - INFO - Petición: GET /recommend/999999
+2025-03-31 18:19:19,802 - movie_recommender - INFO - Petición: GET /recommend/1
+2025-03-31 18:21:03,519 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:21:03,731 - movie_recommender - INFO - Petición: GET /health
+2025-03-31 18:21:03,733 - movie_recommender - INFO - Petición: GET /recommend/999999
+2025-03-31 18:21:03,749 - movie_recommender - INFO - Petición: GET /recommend/1
+2025-03-31 18:24:01,702 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:24:01,916 - movie_recommender - INFO - Petición: GET /health
+2025-03-31 18:24:01,917 - movie_recommender - INFO - Petición: GET /recommend/999999
+2025-03-31 18:24:01,935 - movie_recommender - INFO - Petición: GET /recommend/1
+2025-03-31 18:25:57,543 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:25:57,759 - movie_recommender - INFO - Petición: GET /health
+2025-03-31 18:25:57,760 - movie_recommender - INFO - Petición: GET /recommend/999999
+2025-03-31 18:25:57,776 - movie_recommender - INFO - Petición: GET /recommend/1
+2025-03-31 18:27:51,777 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:27:51,994 - movie_recommender - INFO - Petición: GET /health
+2025-03-31 18:27:51,996 - movie_recommender - INFO - Petición: GET /recommend/999999
+2025-03-31 18:27:52,011 - movie_recommender - INFO - Petición: GET /recommend/1
+2025-03-31 18:30:31,518 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:30:31,728 - movie_recommender - INFO - Petición: GET /health
+2025-03-31 18:30:31,730 - movie_recommender - INFO - Petición: GET /recommend/999999
+2025-03-31 18:30:31,745 - movie_recommender - INFO - Petición: GET /recommend/1
+2025-03-31 18:37:37,737 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:37:37,956 - movie_recommender - INFO - Petición: GET /health
+2025-03-31 18:37:37,958 - movie_recommender - INFO - Petición: GET /recommend/999999
+2025-03-31 18:37:37,973 - movie_recommender - INFO - Petición: GET /recommend/1
+2025-03-31 18:48:10,580 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:48:12,107 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:54:27,697 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:54:58,500 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
+2025-03-31 18:54:59,993 - movie_recommender - INFO - Modelo cargado desde models/svd_model_current.pkl
