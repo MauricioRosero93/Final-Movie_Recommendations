@@ -1,19 +1,21 @@
-# Midterm - Movie Recommendations
+# Final - Movie Recommendations
 
-## Milestone 1: Recommendation Model and First Deployment
+## Milestone 2: Model and Infrastructure Quality
 
-### Learning goals:
+**Learning goals:**
 
-- [ ] Collect data from multiple sources and engineer features for learning
-- [ ] Apply state of the art machine learning tools
-- [ ] Deploy a model inference service
-- [ ] Measure and compare multiple quality attributes of your model
+* Test all components of the learning infrastructure
+* Build an infrastructure to assess model and data quality
+* Build an infrastructure to evaluate a model in production
+* Use continuous integration to test infrastructure and models
 
-Request recommendation result:
+**Screenshots**
 ![a](Screenshots/1.png)
 
-Personalized recommendations testing:
+![a](Screenshots/2.png)
+
 ![a](Screenshots/3.png)
 
-Performance comparison between models:
+![a](Screenshots/4.png)
+
 ![a](Screenshots/5.png)
