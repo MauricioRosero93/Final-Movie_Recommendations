@@ -1,30 +1,28 @@
 pipeline {
     agent any
     
+    environment {
+        PYTHON = "C:\\Users\\Asus\\Final-Movie_Recommendations\\.venv\\Scripts\\python.exe"
+    }
+    
     stages {
         stage('Instalar Dependencias') {
             steps {
-                bat 'python -m pip install pytest numpy pandas scikit-surprise'
+                bat "\"${env.PYTHON}\" -m pip install pytest numpy pandas scikit-surprise"
             }
         }
         
         stage('Ejecutar Pruebas') {
             steps {
-                bat 'python -m pytest tests/ --junitxml=test-results/results.xml'
-            }
-            
-            post {
-                always {
-                    archiveArtifacts artifacts: 'test-results/results.xml'
-                }
+                bat "\"${env.PYTHON}\" -m pytest tests/ --junitxml=test-results/results.xml"
             }
         }
         
         stage('Ejecutar Pipeline') {
             steps {
-                bat 'python pipeline/data_processing.py'
-                bat 'python pipeline/model_training.py'
-                bat 'python pipeline/model_evaluation.py'
+                bat "\"${env.PYTHON}\" pipeline/data_processing.py"
+                bat "\"${env.PYTHON}\" pipeline/model_training.py"
+                bat "\"${env.PYTHON}\" pipeline/model_evaluation.py"
             }
         }
     }
