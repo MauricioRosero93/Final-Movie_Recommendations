@@ -1,24 +1,38 @@
 from flask import Flask, jsonify, request, render_template
+#from prometheus_metrics import RECOMMENDATIONS_COUNT, RESPONSE_TIME
 import pickle
 import pandas as pd
 from datetime import datetime
 import os
 import time
+from prometheus_client import start_http_server, Counter, Histogram
 
-# 1. Cargar modelos y datos
+
+RECOMMENDATIONS_COUNT = Counter('recommendations_total', 'Total de recomendaciones generadas')
+RESPONSE_TIME = Histogram('response_time_seconds', 'Tiempo de respuesta del endpoint /recommend')
+RATINGS_COUNTER = Counter(
+    'movie_ratings_total',
+    'Total de ratings registrados por valoración',
+    ['stars'] 
+)
+
+#start_http_server(8000, addr='0.0.0.0') 
+
+# Cargar modelos y datos
 with open('models/svd_model.pkl', 'rb') as f:
     model = pickle.load(f)
 
-movies = pd.read_csv('data/movies.csv')  # Asegurar que tiene: movieId, title
+movies = pd.read_csv('data/movies.csv') 
 
 app = Flask(__name__)
 
-# 2. Funciones auxiliares
+# Obtener título de las películas
 def get_movie_title(movie_id):
     """Obtiene el título de una película por su ID"""
     movie = movies[movies['movieId'] == movie_id]
     return movie.iloc[0]['title'] if not movie.empty else None
 
+# Registra llamadas al endpoint /recommend
 def log_interaction(user_id, recommendations, response_time):
     """Registra llamadas al endpoint /recommend"""
     os.makedirs("monitoring", exist_ok=True)
@@ -36,11 +50,14 @@ def log_interaction(user_id, recommendations, response_time):
         quoting=1
     )
 
-# 3. Endpoints
+# Endpoints
 @app.route('/recommend/<int:user_id>', methods=['GET'])
 def recommend(user_id):
     start_time = time.time()
     movie_titles = recommend_movies(user_id)
+    # Registro de métricas
+    RESPONSE_TIME.observe(time.time() - start_time)
+    RECOMMENDATIONS_COUNT.inc()
     log_interaction(
         user_id=user_id,
         recommendations=movie_titles,
@@ -48,11 +65,14 @@ def recommend(user_id):
     )
     return jsonify(movie_titles)
 
+
 def recommend_movies(user_id, n=20):
     all_movies = movies['movieId'].unique()
     predictions = [model.predict(user_id, movie_id) for movie_id in all_movies]
     top_movies = sorted(predictions, key=lambda x: x.est, reverse=True)[:n]
     return [get_movie_title(pred.iid) for pred in top_movies]
+
+
 
 @app.route('/rate/<int:movie_id>=<int:rating>', methods=['GET'])
 def rate_movie(movie_id, rating):
@@ -80,6 +100,8 @@ def rate_movie(movie_id, rating):
         index=False,
         quoting=1
     )
+
+    RATINGS_COUNTER.labels(stars=str(rating)).inc()
 
     return jsonify({
         "status": "success",
@@ -134,4 +156,5 @@ def show_monitoring():
 
 # 4. Configuración inicial
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8082, debug=True)
+    start_http_server(8000, addr='0.0.0.0')
+    app.run(host='0.0.0.0', port=8082, debug=False)
